@@ -91,16 +91,9 @@ export default function Application(props) {
         />
       </section>
       <section className="schedule">
-        {/* Replace this with the schedule elements during the "The Scheduler" activity. */}
         {Object.values(appointments).map(appointment => {
-          return (
-            <Appointment
-              key={appointment.id}
-              id={appointment.id}
-              time={appointment.time}
-              interview={appointment.interview}
-            />
-          );
+          console.log("appts", appointment);
+          return <Appointment key={appointment.id} {...appointment} />
         })}
         <Appointment key="last" time="5pm" />
       </section>
