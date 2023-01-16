@@ -24,7 +24,22 @@ export default function Application(props) {
   // bookInterview function
   function bookInterview(id, interview) {
     console.log("id, interview", id, interview);
-
+    
+    // create a new appointment object starting with values copied from the existing appointment
+    const appointment = {
+      ...state.appointments[id],
+      interview: {...interview}
+    };
+    // create new appointments object that will replace the existing record with the matching id
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+    // call setState with the new state object
+    setState({
+      ...state, 
+      appointments
+    });
   }
 
   // schedule that displays Appointment components
