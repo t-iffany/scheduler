@@ -21,27 +21,6 @@ export default function Application(props) {
   const dailyAppointments = getAppointmentsForDay(state, state.day);
   const dailyInterviewers = getInterviewersForDay(state, state.day);
 
-  // bookInterview function
-  function bookInterview(id, interview) {
-    console.log("id, interview", id, interview);
-    
-    // create a new appointment object starting with values copied from the existing appointment
-    const appointment = {
-      ...state.appointments[id],
-      interview: {...interview}
-    };
-    // create new appointments object that will replace the existing record with the matching id
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
-    // call setState with the new state object
-    setState({
-      ...state, 
-      appointments
-    });
-  }
-
   // schedule that displays Appointment components
   const schedule = dailyAppointments.map(appointment => {
     const interview = getInterview(state, appointment.interview);
@@ -72,6 +51,32 @@ export default function Application(props) {
   }, []);
 
 
+  // bookInterview function
+  function bookInterview(id, interview) {
+
+    console.log("id, interview", id, interview);
+    
+    // create a new appointment object starting with values copied from the existing appointment
+    const appointment = {
+      ...state.appointments[id],
+      interview: {...interview}
+    };
+    // create new appointments object that will replace the existing record with the matching id
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    // make PUT request using axios to update database with the interview data
+    return axios
+      .put(`/api/appointments/${id}`, {interview})
+      .then(response => {
+        // call setState with the new state object
+        setState({...state, appointments})
+      })
+
+  }
+  
   return (
     <main className="layout">
       <section className="sidebar">
