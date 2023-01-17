@@ -14,11 +14,14 @@ export default function Appointment(props) {
   const SHOW = "SHOW";
   const CREATE ="CREATE";
   const SAVING ="SAVING";
+  const DELETING ="DELETING";
 
   const {mode, transition, back} = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
 
+
+  // function to save interview
   function save(name, interviewer) {
     const interview = {
       student: name,
@@ -27,9 +30,18 @@ export default function Appointment(props) {
     
     // show the SAVING indicator before calling props.bookInterview
     transition(SAVING);
-
+    // call props.bookInterview to save interview and transition display to SHOW component
     props.bookInterview(props.id, interview)
       .then(() => transition(SHOW));
+  }
+
+  // function to delete interview
+  function remove() {
+    // show the DELETING indicator before calling props.cancelInterview
+    transition(DELETING);
+    // call props.cancelInterview to cancel interview and transition display to EMPTY component
+    props.cancelInterview(props.id)
+      .then(() => transition(EMPTY));
   }
 
   return (
@@ -40,6 +52,7 @@ export default function Appointment(props) {
         <Show
           student={props.interview.student}
           interviewer={props.interview.interviewer}
+          onDelete={remove}
       />
       )}
       {mode === CREATE && (
@@ -52,7 +65,10 @@ export default function Appointment(props) {
         />
       )}
       {mode === SAVING && (
-        <Status />
+        <Status message ="Saving" />
+      )}
+      {mode === DELETING && (
+        <Status message ="Deleting" />
       )}
     </article>
   );

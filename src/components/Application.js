@@ -16,7 +16,7 @@ export default function Application(props) {
     interviewers: {}
   });
 
-  const setDay = day => setState({...state, day: day});
+  const setDay = day => setState({ ...state, day: day });
 
   const dailyAppointments = getAppointmentsForDay(state, state.day);
   const dailyInterviewers = getInterviewersForDay(state, state.day);
@@ -26,13 +26,14 @@ export default function Application(props) {
     const interview = getInterview(state, appointment.interview);
 
     return (
-      <Appointment 
-        key={appointment.id} 
+      <Appointment
+        key={appointment.id}
         id={appointment.id}
         time={appointment.time}
-        interview={interview} 
+        interview={interview}
         interviewers={dailyInterviewers}
         bookInterview={bookInterview}
+        cancelInterview={cancelInterview}
       />
     );
   });
@@ -45,7 +46,7 @@ export default function Application(props) {
       axios.get("http://localhost:8001/api/appointments"),
       axios.get("http://localhost:8001/api/interviewers")
     ]).then((all) => {
-      setState(prev => ({...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data}));
+      setState(prev => ({ ...prev, days: all[0].data, appointments: all[1].data, interviewers: all[2].data }));
     });
 
   }, []);
@@ -53,13 +54,12 @@ export default function Application(props) {
 
   // bookInterview function
   function bookInterview(id, interview) {
-
     console.log("id, interview", id, interview);
-    
+
     // create a new appointment object starting with values copied from the existing appointment
     const appointment = {
       ...state.appointments[id],
-      interview: {...interview}
+      interview: { ...interview }
     };
     // create new appointments object that will replace the existing record with the matching id
     const appointments = {
@@ -69,14 +69,33 @@ export default function Application(props) {
 
     // make PUT request using axios to update database with the interview data
     return axios
-      .put(`/api/appointments/${id}`, {interview})
+      .put(`/api/appointments/${id}`, { interview })
       .then(response => {
         // call setState with the new state object
-        setState({...state, appointments})
-      })
-
+        setState({ ...state, appointments });
+      });
   }
-  
+
+
+  // cancelInterview function by setting interview to null
+  function cancelInterview(id) {
+    const appointment = {
+      ...state.appointments[id],
+      interview: null
+    };
+    const appointments = {
+      ...state.appointments,
+      [id]: appointment
+    };
+
+    // make DELETE request using axios to update database
+    return axios
+      .delete(`/api/appointments/${id}`)
+      .then(response => {
+        setState({...state, appointments});
+      });
+  }
+
   return (
     <main className="layout">
       <section className="sidebar">
