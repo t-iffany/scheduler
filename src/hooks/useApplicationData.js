@@ -46,8 +46,9 @@ export default function useApplicationData() {
     return axios
       .put(`/api/appointments/${id}`, { interview })
       .then(response => {
+        const days = updateSpots(state, appointments);
         // call setState with the new state object
-        setState({ ...state, appointments });
+        setState(prev => ({ ...prev, appointments, days }));
       });
   }
 
@@ -67,9 +68,36 @@ export default function useApplicationData() {
     return axios
       .delete(`/api/appointments/${id}`)
       .then(response => {
-        setState({ ...state, appointments });
+        const days = updateSpots(state, appointments);
+        setState(prev => ({ ...prev, appointments, days }));
       });
   }
+
+  
+  // updateSpots function
+  function updateSpots(state, appointments) {
+    // find the day matching state.day, save its object into dayObj
+    // in the days array, find the element whos name === state.day ; days.name === state.day
+    const dayObj = state.days.find(element => element.name === state.day);
+    console.log("dayObj: ", dayObj);
+
+    // counter to count num of spots
+    let spots = 0;
+    // iterate through ids of appointments array in dayObj
+    for (const id of dayObj.appointments) {
+      // appointment is at appointments index of [id]
+      const appointment = appointments[id];
+      // if not appointment (appointments of [id]).interview = null, spots++
+      if (!appointment.interview) {
+        spots++;
+      }
+    }
+    // new day object that copies contents of dayObj and inserts 'spots'
+    const day = { ...dayObj, spots };
+    // return an updated state.days array ; if day name matches, return day, otherwise return element
+    return state.days.map(element => element.name === state.day ? day : element);
+  }
+
 
   return {
     state,
