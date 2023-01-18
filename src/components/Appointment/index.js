@@ -71,7 +71,7 @@ export default function Appointment(props) {
           student={props.interview.student}
           interviewer={props.interview.interviewer}
           onDelete={() => transition(CONFIRM)}
-          onEdit={edit}
+          onEdit={() => transition(EDIT)}
       />
       )}
       {mode === CREATE && (
