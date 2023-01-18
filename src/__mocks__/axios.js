@@ -88,12 +88,18 @@ export default {
   }),
 
   defaults: { baseURL: "" },
-  put: jest.fn(url => {
-    if (url === "/api/appointments/1") {
+    put: jest.fn(url => {
       return Promise.resolve({
       status: 204,
       statusText: "No Content"
       })
-    }
-  })
+    }),
+
+  defaults: { baseURL: "" },
+    delete: jest.fn(url => {
+      return Promise.resolve({
+      status: 204,
+      statusText: "No Content"
+      })
+    })
 };
