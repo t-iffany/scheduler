@@ -1,18 +1,19 @@
 
 describe("Appointments", () => {
 
-  it("should book an interview", () => {
+  // separate common test commands
+  beforeEach(() => {
+    cy.request("GET", "/api/debug/reset");
 
-    // GET to "/api/debug/reset" to reset database
-    cy.request("GET", "/api/debug/reset")
-    
-    // visit root fo the web server and ensure that the data loads
     cy.visit("/");
 
     cy.contains("Monday");
-    
+  });
+
+  it("should book an interview", () => {
+
     cy.get("[alt=Add]")
-      .first()  // need to use first because there are two Add buttons
+      .first()  
       .click();
 
     cy.get("[data-testid=student-name-input]")
