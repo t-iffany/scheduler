@@ -28,7 +28,6 @@ export default function Appointment(props) {
     props.interview ? SHOW : EMPTY
   );
 
-
   // function to save interview
   function save(name, interviewer) {
     const interview = {
