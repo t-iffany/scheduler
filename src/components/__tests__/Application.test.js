@@ -19,6 +19,7 @@ describe("Application", () => {
   });
 
   it("loads data, books an interview and reduces the spots remaining for the first day by 1", async () => {
+    
     // render the application
     const { container, debug } = render (<Application />);
     // wait until the text "Archie Cohen" is displayed
@@ -26,15 +27,14 @@ describe("Application", () => {
     // search for all of the appointments in the container
     const appointments = getAllByTestId(container, "appointment");
     // confirm empty appointment at index 0
-    const appointment = getAllByTestId(container, "appointment")[0];
+    const appointment = appointments[0];
     // click the "Add" button on the first empty appointment
     fireEvent.click(getByAltText(appointment, "Add"));
     // enter the name "Lydia Miller-Jones" into the input with the placeholder "Enter student name"
-    // click the first interviewer on the list
     fireEvent.change(getByPlaceholderText(appointment, /enter student name/i), {
       target: { value: "Lydia Miller-Jones" }
     });
-    // select interviewer
+    // click the first interviewer on the list
     fireEvent.click(getByAltText(appointment, "Sylvia Palmer"));
     // click the "Save" button on that same appointment
     fireEvent.click(getByText(appointment, "Save"));
@@ -46,17 +46,9 @@ describe("Application", () => {
     const day = getAllByTestId(container, "day").find(day =>
       queryByText(day, "Monday")
     );
-    //console.log(prettyDOM(day));
+
     expect(getByText(day, "no spots remaining")).toBeInTheDocument();
 
-    // alternative solution for last query
-    // expect(getAllByTestId(container, "day")[0]).toHaveTextContent("no spots remaining");
-    
-    debug();
-   
   });
-
-
-
 
 })
