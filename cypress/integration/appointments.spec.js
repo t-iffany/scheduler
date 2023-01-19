@@ -1,7 +1,6 @@
 
 describe("Appointments", () => {
 
-  // separate common test commands
   beforeEach(() => {
     cy.request("GET", "/api/debug/reset");
 
@@ -48,6 +47,22 @@ describe("Appointments", () => {
 
     cy.contains(".appointment__card--show", "Lydia Miller-Jones");
     cy.contains(".appointment__card--show", "Tori Malcolm");
+
+  });
+
+  it("should delete an interview", () => {
+
+    cy.get("[alt=Delete]")
+      .click({ force: true });
+
+    cy.contains("Confirm")
+      .click();
+
+    cy.contains("Deleting").should("exist");
+    cy.contains("Deleting").should("not.exist");
+
+    cy.contains(".appointment__card--show", "Archie Cohen")
+      .should("not.exist");
 
   });
 
