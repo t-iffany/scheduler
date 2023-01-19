@@ -4,11 +4,8 @@ import Button from "components/Button";
 
 export default function Form(props) {
 
-  // console.log("props in Form component", props)
-
   const [student, setStudent] = useState(props.student || "");
   const [interviewer, setInterviewer] = useState(props.interviewer || null);
-  // track the error state; when input is invalid, we need to change the error state to "Student name cannot be blank"
   const [error, setError] = useState("");
 
   const reset = function() {
@@ -50,10 +47,6 @@ export default function Form(props) {
             name={props.name}
             type="text"
             placeholder="Enter Student Name"
-            /*
-              This must be a controlled component
-              your code goes here
-            */
             value={student}
             onChange={(event) => setStudent(event.target.value)}
             data-testid="student-name-input"
@@ -62,7 +55,6 @@ export default function Form(props) {
         </form>
 
         <InterviewerList
-          /* your code goes here */
           interviewers={props.interviewers} value={interviewer} onChange={setInterviewer}
         />
       </section>

@@ -6,7 +6,7 @@ export function getAppointmentsForDay(state, day) {
     return [];
   }
 
-  // Filter state.days array to find the object who's name matches the provided day
+  // filter state.days array to find the object who's name matches the provided day
   const filteredDays = state.days.filter(selectedDay => {
     return day === selectedDay.name;
   });

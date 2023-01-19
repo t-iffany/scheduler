@@ -19,5 +19,4 @@ describe("Appointment", () => {
     render(<Appointment />);
   });
 
-})
-
+});

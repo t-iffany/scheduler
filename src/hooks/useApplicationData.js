@@ -29,7 +29,6 @@ export default function useApplicationData() {
 
   // bookInterview function
   function bookInterview(id, interview) {
-    console.log("id, interview", id, interview);
 
     // create a new appointment object starting with values copied from the existing appointment
     const appointment = {
@@ -73,21 +72,17 @@ export default function useApplicationData() {
       });
   }
 
-  
+
   // updateSpots function
   function updateSpots(state, appointments) {
     // find the day matching state.day, save its object into dayObj
-    // in the days array, find the element whos name === state.day ; days.name === state.day
     const dayObj = state.days.find(element => element.name === state.day);
-    console.log("dayObj: ", dayObj);
 
-    // counter to count num of spots
     let spots = 0;
     // iterate through ids of appointments array in dayObj
     for (const id of dayObj.appointments) {
       // appointment is at appointments index of [id]
       const appointment = appointments[id];
-      // if not appointment (appointments of [id]).interview = null, spots++
       if (!appointment.interview) {
         spots++;
       }
@@ -97,7 +92,6 @@ export default function useApplicationData() {
     // return an updated state.days array ; if day name matches, return day, otherwise return element
     return state.days.map(element => element.name === state.day ? day : element);
   }
-
 
   return {
     state,

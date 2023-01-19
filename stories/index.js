@@ -36,15 +36,15 @@ storiesOf("Button", module)
   ));
 
 
-storiesOf("DayListItem", module) 
+storiesOf("DayListItem", module)
   .addParameters({
     backgrounds: [{ name: "dark", value: "#222f3e", default: true }]
-  }) 
-  .add("Unselected", () => <DayListItem name="Monday" spots={5} />) 
-  .add("Selected", () => <DayListItem name="Monday" spots={5} selected />) 
+  })
+  .add("Unselected", () => <DayListItem name="Monday" spots={5} />)
+  .add("Selected", () => <DayListItem name="Monday" spots={5} selected />)
   .add("Full", () => <DayListItem name="Monday" spots={0} />)
   .add("Clickable", () => (
-    <DayListItem name="Tuesday" setDay={action("setDay")} spots={5} /> 
+    <DayListItem name="Tuesday" setDay={action("setDay")} spots={5} />
   ));
 
 const days = [
@@ -64,7 +64,7 @@ const days = [
     spots: 0,
   },
 ];
-  
+
 
 storiesOf("DayList", module)
   .addParameters({
@@ -77,7 +77,7 @@ storiesOf("DayList", module)
     <DayList days={days} value={"Tuesday"} onChange={action("setDay")} />
   ))
   .add("Wednesday", () => (
-      <DayList days={days} value={"Wednesday"} onChange={action("setDay")} />
+    <DayList days={days} value={"Wednesday"} onChange={action("setDay")} />
   ));
 
 
@@ -85,7 +85,7 @@ const interviewer = {
   id: 1,
   name: "Sylvia Palmer",
   avatar: "https://i.imgur.com/LpaY82x.png"
- };
+};
 
 storiesOf("InterviewerListItem", module)
   .addParameters({
@@ -107,7 +107,7 @@ storiesOf("InterviewerListItem", module)
     />
   ))
   .add("Clickable", () => (
-   <InterviewerListItem
+    <InterviewerListItem
       name={interviewer.name}
       avatar={interviewer.avatar}
       setInterviewer={() => action("setInterviewer")(interviewer.id)}
@@ -148,14 +148,14 @@ storiesOf("InterviewerList", module)
 
 storiesOf("Appointment", module)
   .addParameters({
-    backgrounds: [{ name: "white", value: "#fff", default: true }]  
+    backgrounds: [{ name: "white", value: "#fff", default: true }]
   })
   .add("Appointment", () => <Appointment />)
   .add("Appointment with Time", () => <Appointment time="12pm" />)
   .add("Header", () => <Header time="12pm" />)
-  .add("Empty", () => <Empty onAdd={action("onAdd")}/>)
+  .add("Empty", () => <Empty onAdd={action("onAdd")} />)
   .add("Show", () => (
-    <Show 
+    <Show
       student="Lydia Miller-Jones"
       interviewer={interviewer}
       onEdit={action("onEdit")}
@@ -164,7 +164,7 @@ storiesOf("Appointment", module)
   ))
   .add("Confirm", () => (
     <Confirm
-      message="Delete the appointment?"
+      message="Are you sure you want to delete the appointment?"
       onConfirm={action("onConfirm")}
       onCancel={action("onCancel")}
     />
@@ -203,7 +203,7 @@ storiesOf("Appointment", module)
       <Appointment
         id={1}
         time="4pm"
-        interview={{student: "Lydia Miller-Jones", interviewer}}
+        interview={{ student: "Lydia Miller-Jones", interviewer }}
       />
       <Appointment time="5pm" />
     </Fragment>
